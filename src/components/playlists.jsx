@@ -1,11 +1,11 @@
-import { fetchPlaylists, isLoggedIn } from "../utils/spotifyUtil";
-
+/* import { fetchPlaylists, isLoggedIn } from "../utils/spotifyUtil";
+ */
 let playlists;
 
-if (isLoggedIn()) {
+/* if (isLoggedIn()) {
   const data = await fetchPlaylists();
   playlists = data.items;
-}
+} */
 
 function Playlists() {
   return (

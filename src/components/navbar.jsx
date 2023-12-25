@@ -1,30 +1,29 @@
-import { isLoggedIn } from "../utils/spotifyUtil";
+/* import { isLoggedIn } from "../utils/spotifyUtil";
 import { loginWithSpotifyClick } from "../utils/spotifyUtil";
 import { fetchProfile } from "../utils/spotifyUtil";
-import { logoutClick } from "../utils/spotifyUtil";
-import "../css/styles.css";
+import { logoutClick } from "../utils/spotifyUtil"; */
+import "../css/global-styles.css";
 
 let loginButton;
 let userImage;
 
-if (isLoggedIn()) {
+/* if (false) {
   const userData = await fetchProfile();
-
   userImage = <img id="profile-img" className="m-3 has-text-center" src={userData.images[0].url}></img>;
   loginButton = (
-    <a className="m-3 has-text-dark has-text-center" onClick={logoutClick}>
+    <a className="m-3 has-text-dark has-text-center">
       Log out
     </a>
-  );
-} else {
+  ); */
+/* } else { */
   loginButton = (
-    <a className="m-3 has-text-dark has-text-center" onClick={loginWithSpotifyClick}>
+    <a className="m-3 has-text-dark has-text-center">
       Log in
     </a>
   );
-}
+/* } */
 
-function SiteNav() {
+function NavBar() {
   return (
     <>
       <div className="is-flex">
@@ -43,4 +42,4 @@ function SiteNav() {
   );
 }
 
-export default SiteNav;
+export default NavBar;

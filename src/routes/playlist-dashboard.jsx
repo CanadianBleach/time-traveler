@@ -1,4 +1,8 @@
-import { fetchPlaylists, isLoggedIn, refreshTokenClick } from "../utils/spotifyUtil";
+import {
+  fetchPlaylists,
+  isLoggedIn,
+  refreshTokenClick,
+} from "../utils/spotifyUtil";
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
@@ -7,16 +11,14 @@ let data;
 
 if (isLoggedIn()) {
   data = await fetchPlaylists();
+} else {
+  window.location.href = "./";
+  console.warn("Not logged in");
 }
 
 function Dashboard() {
   let playlists = data.items;
   let dashboard = <></>;
-
-  if (!isLoggedIn()) {
-    window.location.href = "./";
-    console.warn("Not logged in");
-  }
 
   if (playlists) {
     dashboard = (
@@ -24,7 +26,12 @@ function Dashboard() {
         {playlists.map(function (playlist) {
           return (
             <>
-              <Link target="#blank" to={playlist.external_urls.spotify} key={playlist.id} className="m-2">
+              <Link
+                target="#blank"
+                to={playlist.external_urls.spotify}
+                key={playlist.id}
+                className="m-2"
+              >
                 <div className="">
                   <figure className="image is-128x128">
                     <img
@@ -45,7 +52,9 @@ function Dashboard() {
     dashboard = (
       <>
         <h3>No playlists to show... get on that girl.</h3>
-        <button className="btn btn-primary" onClick={refreshTokenClick}>Refresh Login</button>
+        <button className="btn btn-primary" onClick={refreshTokenClick}>
+          Refresh Login
+        </button>
       </>
     );
   }

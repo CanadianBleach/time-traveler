@@ -175,7 +175,7 @@ async function refreshTokenClick() {
   currentToken.save(token);
 }
 
-function isLoggedIn() {
+function loggedIn() {
   return currentToken.access_token;
 }
 
@@ -183,7 +183,7 @@ export {
   fetchPlaylists,
   fetchProfile,
   loginWithSpotifyClick,
-  isLoggedIn,
+  loggedIn,
   logoutClick,
   fetchPlaylistCover,
   fetchTracks,

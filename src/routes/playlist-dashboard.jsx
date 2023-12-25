@@ -1,6 +1,6 @@
 import {
   fetchPlaylists,
-  isLoggedIn,
+  loggedIn,
   refreshTokenClick,
 } from "../utils/spotifyUtil";
 import "../css/dashboard.css";
@@ -8,13 +8,6 @@ import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
 
 let data;
-
-if (isLoggedIn()) {
-  data = await fetchPlaylists();
-} else {
-  window.location.href = "./";
-  console.warn("Not logged in");
-}
 
 function Dashboard() {
   let playlists = data.items;

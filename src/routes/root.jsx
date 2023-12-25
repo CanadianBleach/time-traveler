@@ -1,14 +1,10 @@
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
-import { isLoggedIn } from "../utils/spotifyUtil";
+import { loggedIn } from "../utils/spotifyUtil";
 import { loginWithSpotifyClick } from "../utils/spotifyUtil";
 
 function Root() {
   // Redirect to dashboard
-  if (isLoggedIn()) {
-    window.location.href = "./dashboard";
-  }
-
   return (
     <>
       <section className="hero is-fullheight">

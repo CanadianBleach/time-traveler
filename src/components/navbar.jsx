@@ -1,4 +1,4 @@
-import { isLoggedIn } from "../utils/spotifyUtil";
+import { loggedIn } from "../utils/spotifyUtil";
 import { loginWithSpotifyClick } from "../utils/spotifyUtil";
 import { logoutClick } from "../utils/spotifyUtil";
 import { Outlet, Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import "../css/global-styles.css";
 let navStart;
 let navEnd;
 
-if (isLoggedIn()) {
+if (loggedIn()) {
   navStart = (
     <>
       <div className="navbar-brand">
@@ -37,7 +37,9 @@ if (isLoggedIn()) {
   navStart = (
     <>
       <div className="navbar-brand">
-        <Link to={`/`} className="navbar-item">Time-Traveler</Link>
+        <Link to={`/`} className="navbar-item">
+          Time-Traveler
+        </Link>
       </div>
       <Link
         target="#blank"

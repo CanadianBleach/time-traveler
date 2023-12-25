@@ -1,5 +1,5 @@
 const clientId = "865e4635c0004d49b740988d9b45e19d";
-const redirectUrl = "http://localhost:5173";
+const redirectUrl = "https://time-traveler.vercel.app/";
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";

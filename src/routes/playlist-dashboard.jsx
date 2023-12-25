@@ -1,4 +1,4 @@
-import { fetchPlaylists, isLoggedIn } from "../utils/spotifyUtil";
+import { fetchPlaylists, isLoggedIn, refreshTokenClick } from "../utils/spotifyUtil";
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
@@ -45,6 +45,7 @@ function Dashboard() {
     dashboard = (
       <>
         <h3>No playlists to show... get on that girl.</h3>
+        <button className="btn btn-primary" onClick={refreshTokenClick}>Refresh Login</button>
       </>
     );
   }

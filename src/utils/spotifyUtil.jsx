@@ -184,5 +184,6 @@ export {
   isLoggedIn,
   logoutClick,
   fetchPlaylistCover,
-  fetchTracks
+  fetchTracks,
+  refreshTokenClick
 };

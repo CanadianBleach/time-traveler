@@ -1,11 +1,11 @@
 import "bulma/css/bulma.min.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Root from "../src/routes/root";
-import ErrorPage from "../src/error-page";
+import Root from "./routes/root";
+import ErrorPage from "./error-page";
 
 // Page imports
-import Dashboard from "../src/routes/playlist-dashboard";
+import Dashboard from "./routes/playlist-dashboard";
 
 import {
   createBrowserRouter,

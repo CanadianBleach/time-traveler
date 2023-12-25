@@ -7,7 +7,8 @@ import "../css/dashboard.css";
 import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
 
-let data;
+let data = await fetchPlaylists();
+console.log(data);
 
 function Dashboard() {
   let playlists = data.items;

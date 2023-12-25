@@ -24,8 +24,8 @@ function Dashboard() {
         {playlists.map(function (playlist) {
           return (
             <>
-              <Link target="#blank" to={playlist.external_urls.spotify} key={playlist.id} className="m-3 card">
-                <div className="card-image">
+              <Link target="#blank" to={playlist.external_urls.spotify} key={playlist.id} className="m-2">
+                <div className="">
                   <figure className="image is-128x128">
                     <img
                       className="p-1"

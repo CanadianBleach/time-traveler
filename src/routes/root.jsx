@@ -1,13 +1,28 @@
-import "../css/global-styles.css";
+import "../css/dashboard.css";
 import NavBar from "../components/navbar";
-import Login from "../components/login";
-import Playlists from "../components/playlists";
+import { isLoggedIn } from "../utils/spotifyUtil";
+import { loginWithSpotifyClick } from "../utils/spotifyUtil";
 
 function Root() {
+  // Redirect to dashboard
+  if (isLoggedIn()) {
+    window.location.href = "./dashboard";
+  }
+
   return (
     <>
       <section className="hero is-fullheight">
-      <NavBar></NavBar>
+        <NavBar></NavBar>
+        <div className="hero-body is-flex-direction-column is-justify-content-center">
+          <h2 className="m-3 subtitle">So you got time traveler...</h2>
+          <button
+            className="button is-success m-3 is-inverted is-medium"
+            id="login-button"
+            onClick={loginWithSpotifyClick}
+          >
+            Log in with Spotify
+          </button>
+        </div>
       </section>
     </>
   );

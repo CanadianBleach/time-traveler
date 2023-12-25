@@ -1,43 +1,73 @@
-/* import { isLoggedIn } from "../utils/spotifyUtil";
+import { isLoggedIn } from "../utils/spotifyUtil";
 import { loginWithSpotifyClick } from "../utils/spotifyUtil";
-import { fetchProfile } from "../utils/spotifyUtil";
-import { logoutClick } from "../utils/spotifyUtil"; */
+import { logoutClick } from "../utils/spotifyUtil";
+import { Outlet, Link } from "react-router-dom";
 import "../css/global-styles.css";
 
-let loginButton;
-let userImage;
+let navStart;
+let navEnd;
 
-/* if (false) {
-  const userData = await fetchProfile();
-  userImage = <img id="profile-img" className="m-3 has-text-center" src={userData.images[0].url}></img>;
-  loginButton = (
-    <a className="m-3 has-text-dark has-text-center">
-      Log out
-    </a>
-  ); */
-/* } else { */
-  loginButton = (
-    <a className="m-3 has-text-dark has-text-center">
-      Log in
-    </a>
+if (isLoggedIn()) {
+  navStart = (
+    <>
+      <div className="navbar-brand">
+        <Link className="navbar-item">Time-Traveler</Link>
+      </div>
+      <Link
+        target="#blank"
+        className="navbar-item"
+        to="https://github.com/CanadianBleach/time-traveler"
+      >
+        Github
+      </Link>
+      <Link to={`/dashboard`} className="navbar-item">
+        Dashboard
+      </Link>
+    </>
   );
-/* } */
+  // TODO: Are you sure pop up modal
+  navEnd = (
+    <>
+      <Link className="navbar-item" to={`/`} onClick={logoutClick}>
+        Log Out
+      </Link>
+    </>
+  );
+} else {
+  navStart = (
+    <>
+      <div className="navbar-brand">
+        <Link to={`/`} className="navbar-item">Time-Traveler</Link>
+      </div>
+      <Link
+        target="#blank"
+        className="navbar-item"
+        to="https://github.com/CanadianBleach/time-traveler"
+      >
+        Github
+      </Link>
+    </>
+  );
+  navEnd = (
+    <>
+      <>
+        <Link className="navbar-item" onClick={loginWithSpotifyClick}>
+          Log In
+        </Link>
+      </>
+    </>
+  );
+}
 
 function NavBar() {
   return (
     <>
-      <div className="is-flex">
-        <div className="block m-1"></div>
-        {loginButton}
-        <a
-          className="m-3 has-text-dark"
-          href="https://github.com/CanadianBleach/"
-          target="#blank"
-        >
-          Github
-        </a>
-        {userImage}
-      </div>
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-menu">
+          <div className="navbar-start">{navStart}</div>
+          <div className="navbar-end">{navEnd}</div>
+        </div>
+      </nav>
     </>
   );
 }

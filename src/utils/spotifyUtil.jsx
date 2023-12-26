@@ -1,12 +1,16 @@
+import process from "process";
+
 const clientId = "865e4635c0004d49b740988d9b45e19d";
-const redirectUrl = "https://time-traveler.vercel.app/dashboard";
-//const redirectUrl = "https://time-traveler.vercel.app/";
-//const redirectUrl = "http://localhost:5173";
-//const redirectUrl = "http://localhost:4173/";
+
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
+
+// For production vs dev
+let redirectUrl;
+//redirectUrl = "http://localhost:5173/dashboard";
+redirectUrl = "https://time-traveler.vercel.app/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {

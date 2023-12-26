@@ -6,9 +6,10 @@ import {
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
+import PlaylistTile from "../components/playlist-tile";
+import Playlist from "./playlist";
 
 let data = await fetchPlaylists();
-console.log(data);
 
 function Dashboard() {
   let playlists = data.items;
@@ -20,22 +21,7 @@ function Dashboard() {
         {playlists.map(function (playlist) {
           return (
             <>
-              <Link
-                target="#blank"
-                to={playlist.external_urls.spotify}
-                key={playlist.id}
-                className="m-2"
-              >
-                <div className="">
-                  <figure className="image is-128x128">
-                    <img
-                      className="p-1"
-                      src={playlist.images[0].url}
-                      alt={playlist.name}
-                    ></img>
-                  </figure>
-                </div>
-              </Link>
+              <PlaylistTile src={playlist.images[0].url} playlistId={playlist.id} ></PlaylistTile>
             </>
           );
         })}
@@ -45,10 +31,12 @@ function Dashboard() {
     console.warn("NO PLAYLISTS LOADED");
     dashboard = (
       <>
-        <h3>No playlists to show... get on that girl.</h3>
-        <button className="btn btn-primary" onClick={refreshTokenClick}>
-          Refresh Login
-        </button>
+        <div className="container">
+          <h3>No playlists to show... get on that girl.</h3>
+          <button className="button is-button-primary" onClick={refreshTokenClick}>
+            Refresh Login
+          </button>
+        </div>
       </>
     );
   }
@@ -57,10 +45,13 @@ function Dashboard() {
     <>
       <section className="hero is-fullheight">
         <NavBar></NavBar>
-        <div className="hero-body is-flex is-flex-direction-column">
-          <h2 className="title has-text-center">Playlists</h2>
-          <div className="container is-flex is-flex-wrap-wrap is-justify-content-flex-start">
-            {dashboard}
+        <div className="container">
+          <h2 className="m-3 subtitle">Playlists</h2>
+{/*           <Playlist></Playlist>
+ */}          <div className="is-flex-direction-column is-justify-content-center">
+            <div className="is-align-content-flex-start is-flex is-flex-wrap-wrap">
+              {dashboard}
+            </div>
           </div>
         </div>
       </section>

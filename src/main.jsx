@@ -6,6 +6,7 @@ import ErrorPage from "./error-page";
 
 // Page imports
 import Dashboard from "./routes/playlist-dashboard";
+import Playlist from "./routes/playlist"; 
 
 import {
   createBrowserRouter,
@@ -21,7 +22,14 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <Dashboard />,
+    children: [
+      {
+        path: "playlist/:playlist_id",
+        element: <Playlist />
+      },
+    ],
   },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

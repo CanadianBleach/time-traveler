@@ -1,4 +1,4 @@
-import process from "process";
+import dayjs from 'dayjs'
 
 const clientId = "865e4635c0004d49b740988d9b45e19d";
 
@@ -9,8 +9,8 @@ const scope = "user-read-private user-read-email";
 
 // For production vs dev
 let redirectUrl;
-//redirectUrl = "http://localhost:5173/dashboard";
-redirectUrl = "https://time-traveler.vercel.app/dashboard";
+redirectUrl = "http://localhost:5173/dashboard";
+//redirectUrl = "https://time-traveler.vercel.app/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -49,7 +49,7 @@ async function fetchProfile() {
 }
 
 async function fetchPlaylists() {
-  const response = await fetch("https://api.spotify.com/v1/me/playlists", {
+  const response = await fetch("https://api.spotify.com/v1/me/playlists?limit=50", {
     method: 'GET',
     headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
   });
@@ -172,16 +172,34 @@ async function loginWithSpotifyClick() {
 
 async function logoutClick() {
   localStorage.clear();
-  window.location.href = redirectUrl;
+  window.location.reload();
 }
 
 async function refreshTokenClick() {
   const token = await refreshToken();
   currentToken.save(token);
+  window.location.reload();
 }
 
 function loggedIn() {
-  return currentToken.access_token;
+  // No token
+  if (!currentToken.expires)
+    return false;
+
+  // Check if token is expired
+  let expires = new dayjs(currentToken.expires);
+  var now = new dayjs();
+
+  // If token expired, refresh
+  if (dayjs(now).isAfter(dayjs(expires)))
+  {
+    refreshTokenClick();
+    return false;
+  }
+
+  console.log(currentToken)
+
+  return true;
 }
 
 export {

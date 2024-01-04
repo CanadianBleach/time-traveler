@@ -9,15 +9,12 @@ import "../css/dashboard.css";
 import NavBar from "../components/navbar";
 import { Link } from "react-router-dom";
 import PlaylistTile from "../components/playlist-tile";
-import { useState } from "react";
 
 // Fetch and store playlists to database
 const data = await fetchPlaylists();
 const userData = await fetchProfile();
 
 function Dashboard() {
-  const [shown, setVisibility] = useState("");
-
   let dashboard = <></>;
 
   if (data.error) {
@@ -38,12 +35,7 @@ function Dashboard() {
     );
   }
 
-  const playlistClick = () => {
-    console.log("clicked");
-    if (shown == "") setVisibility("is-shown");
-    else setVisibility("");
-  };
-
+  // Creation of tiles
   let playlists = data.items;
   if (playlists) {
     dashboard = (
@@ -52,7 +44,6 @@ function Dashboard() {
           return (
             <>
               <PlaylistTile
-                onClick={playlistClick}
                 src={playlist.images[0].url}
                 playlistId={playlist.id}
               ></PlaylistTile>

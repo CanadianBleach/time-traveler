@@ -6,7 +6,7 @@ import ErrorPage from "./error-page";
 
 // Page imports
 import Dashboard from "./routes/playlist-dashboard";
-import Tracklist from "./components/tracklist";
+import Tracklist from "./routes/tracklist";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 

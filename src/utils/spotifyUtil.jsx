@@ -9,8 +9,8 @@ const scope = "user-read-private user-read-email";
 
 // For production vs dev
 let redirectUrl;
-redirectUrl = "http://localhost:5173/dashboard";
-//redirectUrl = "https://time-traveler.vercel.app/dashboard";
+//redirectUrl = "http://localhost:5173/dashboard";
+redirectUrl = "https://time-traveler.vercel.app/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -67,7 +67,7 @@ async function fetchPlaylistCover(playlist_id) {
 }
 
 async function fetchTracks(playlist_id) {
-  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
     method: 'GET',
     headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
   });
@@ -196,8 +196,6 @@ function loggedIn() {
     refreshTokenClick();
     return false;
   }
-
-  console.log(currentToken)
 
   return true;
 }

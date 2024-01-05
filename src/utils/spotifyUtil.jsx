@@ -1,16 +1,18 @@
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
+import { json } from "react-router-dom";
 
 const clientId = "865e4635c0004d49b740988d9b45e19d";
-
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
 
+let loggedInVar = false;
+
 // For production vs dev
 let redirectUrl;
-//redirectUrl = "http://localhost:5173/dashboard";
-redirectUrl = "https://time-traveler.vercel.app/dashboard";
+redirectUrl = "http://localhost:5173/dashboard";
+//redirectUrl = "https://time-traveler.vercel.app/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -41,36 +43,49 @@ const currentToken = {
 
 async function fetchProfile() {
   const response = await fetch("https://api.spotify.com/v1/me", {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    method: "GET",
+    headers: { Authorization: "Bearer " + currentToken.access_token },
   });
 
   return await response.json();
 }
 
+function getProfile() {
+  return JSON.parse(localStorage.getItem("user_profile"));
+}
+
 async function fetchPlaylists() {
-  const response = await fetch("https://api.spotify.com/v1/me/playlists?limit=50", {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-  });
+  const response = await fetch(
+    "https://api.spotify.com/v1/me/playlists?limit=50",
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + currentToken.access_token },
+    }
+  );
 
   return await response.json();
 }
 
 async function fetchPlaylistCover(playlist_id) {
-  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/images`, {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-  });
+  const response = await fetch(
+    `https://api.spotify.com/v1/playlists/${playlist_id}/images`,
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + currentToken.access_token },
+    }
+  );
 
   return await response.json();
 }
 
 async function fetchTracks(playlist_id) {
-  const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-  });
+  const response = await fetch(
+    `https://api.spotify.com/v1/playlists/${playlist_id}`,
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + currentToken.access_token },
+    }
+  );
 
   return await response.json();
 }
@@ -90,6 +105,16 @@ if (code) {
 
   const updatedUrl = url.search ? url.href : url.href.replace("?", "");
   window.history.replaceState({}, document.title, updatedUrl);
+
+  // Fetch and setup profile
+  let userData = await fetchProfile();
+  let playlistData = await fetchPlaylists();
+
+  // Todo setup user
+  // Add to mongo
+  loggedInVar = true;
+  window.localStorage.setItem("user_profile", JSON.stringify(userData));
+  window.localStorage.setItem("user_playlists", JSON.stringify(playlistData));
 }
 
 async function redirectToSpotifyAuthorize() {
@@ -182,22 +207,7 @@ async function refreshTokenClick() {
 }
 
 function loggedIn() {
-  // No token
-  if (!currentToken.expires)
-    return false;
-
-  // Check if token is expired
-  let expires = new dayjs(currentToken.expires);
-  var now = new dayjs();
-
-  // If token expired, refresh
-  if (dayjs(now).isAfter(dayjs(expires)))
-  {
-    refreshTokenClick();
-    return false;
-  }
-
-  return true;
+  return loggedInVar;
 }
 
 export {
@@ -208,5 +218,6 @@ export {
   logoutClick,
   fetchPlaylistCover,
   fetchTracks,
-  refreshTokenClick
+  refreshTokenClick,
+  getProfile,
 };

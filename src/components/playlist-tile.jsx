@@ -6,10 +6,10 @@ function PlaylistTile(props) {
   return (
     <>
       <figure className="card m-2">
-        <Link to={`../tracklist/${props.playlistId}`}>
+        <Link to={`./tracklist/${props.playlistId}`}>
           <img
             className="image is-128x128 card-body p-1"
-            src={props.src}
+            src={props.img}
             alt="playlist-cover"
           ></img>
         </Link>
@@ -19,7 +19,7 @@ function PlaylistTile(props) {
 }
 
 PlaylistTile.propTypes = {
-  src: PropTypes.string,
+  img: PropTypes.string,
   playlistId: PropTypes.string,
 };
 

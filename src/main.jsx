@@ -19,10 +19,12 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <Dashboard />,
-  },
-  {
-    path: "tracklist/:playlist_id",
-    element: <Tracklist />,
+    children: [
+      {
+        path: "tracklist/:playlist_id",
+        element: <Tracklist />,
+      },
+    ],
   },
 ]);
 

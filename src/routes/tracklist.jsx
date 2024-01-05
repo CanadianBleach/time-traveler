@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { fetchTracks } from "../utils/spotifyUtil";
+import { fetchTracks, loggedIn } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import SongTile from "../components/track-tile";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Tracklist = () => {
   const playlistId = window.location.pathname.substring(
@@ -34,8 +35,6 @@ const Tracklist = () => {
       [playlistId]
     );
   });
-
-  console.log(trackData);
 
   return (
     <>

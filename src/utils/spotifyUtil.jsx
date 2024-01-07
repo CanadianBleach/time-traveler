@@ -7,8 +7,6 @@ const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
 
-let loggedInVar = false;
-
 // For production vs dev
 let redirectUrl;
 redirectUrl = "http://localhost:5173/dashboard";
@@ -66,21 +64,22 @@ async function fetchPlaylists() {
   return await response.json();
 }
 
-async function fetchPlaylistCover(playlist_id) {
-  const response = await fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}/images`,
-    {
-      method: "GET",
-      headers: { Authorization: "Bearer " + currentToken.access_token },
-    }
-  );
+function getPlaylists() {
+  return JSON.parse(localStorage.getItem("user_playlists"));
+}
 
-  return await response.json();
+function getPlaylist(playlistId) {
+  let playlists = getPlaylists();
+  for (let p in playlists) {
+    if (playlists[p].id == playlistId) return playlists[p];
+  }
+
+  return null;
 }
 
 async function fetchTracks(playlist_id) {
   const response = await fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}`,
+    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=0&limit=100`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + currentToken.access_token },
@@ -107,14 +106,17 @@ if (code) {
   window.history.replaceState({}, document.title, updatedUrl);
 
   // Fetch and setup profile
+  await profileInit();
+}
+
+async function profileInit() {
   let userData = await fetchProfile();
   let playlistData = await fetchPlaylists();
 
   // Todo setup user
   // Add to mongo
-  loggedInVar = true;
-  window.localStorage.setItem("user_profile", JSON.stringify(userData));
-  window.localStorage.setItem("user_playlists", JSON.stringify(playlistData));
+  localStorage.setItem("user_profile", JSON.stringify(userData));
+  localStorage.setItem("user_playlists", JSON.stringify(playlistData.items));
 }
 
 async function redirectToSpotifyAuthorize() {
@@ -197,7 +199,7 @@ async function loginWithSpotifyClick() {
 
 async function logoutClick() {
   localStorage.clear();
-  window.location.reload();
+  window.location = "../";
 }
 
 async function refreshTokenClick() {
@@ -207,7 +209,7 @@ async function refreshTokenClick() {
 }
 
 function loggedIn() {
-  return loggedInVar;
+  return getProfile();
 }
 
 export {
@@ -216,8 +218,9 @@ export {
   loginWithSpotifyClick,
   loggedIn,
   logoutClick,
-  fetchPlaylistCover,
   fetchTracks,
   refreshTokenClick,
   getProfile,
+  getPlaylists,
+  getPlaylist,
 };

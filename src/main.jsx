@@ -17,14 +17,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: <Dashboard />,
-    children: [
-      {
-        path: "tracklist/:playlist_id",
-        element: <Tracklist />,
-      },
-    ],
+  },
+  {
+    path: "/tracklist/:id",
+    element: <Tracklist />,
   },
 ]);
 

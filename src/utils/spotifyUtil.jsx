@@ -106,6 +106,7 @@ if (code) {
   window.history.replaceState({}, document.title, updatedUrl);
 
   // Fetch and setup profile
+  // Add to mongo
   await profileInit();
 }
 

@@ -10,7 +10,13 @@ export default function ErrorPage() {
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
         <i>{error.statusText || error.message}</i>
-      </p>
+      </p>{" "}
+      <button onClick={clearStorage}>Clear storage and reload.</button>
     </div>
   );
+}
+
+function clearStorage() {
+  localStorage.clear;
+  window.location = "../";
 }

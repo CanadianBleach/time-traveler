@@ -19,10 +19,12 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/tracklist/:id",
     element: <Tracklist />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

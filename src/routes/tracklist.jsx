@@ -1,10 +1,17 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { fetchTracks, getPlaylists, getPlaylist, getProfile, loggedIn } from "../utils/spotifyUtil";
+import {
+  fetchTracks,
+  getPlaylists,
+  getPlaylist,
+  getProfile,
+  loggedIn,
+} from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import SongTile from "../components/track-tile";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TrackTile from "../components/track-tile";
 
 const Tracklist = (props) => {
   const playlistId = window.location.pathname.substring(
@@ -13,8 +20,6 @@ const Tracklist = (props) => {
 
   const userData = getProfile();
   const playlist = getPlaylist(playlistId);
-
-  console.log(playlist);
 
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
@@ -35,12 +40,16 @@ const Tracklist = (props) => {
         <NavBar></NavBar>
         <div className="container">
           <div className="section"></div>
-          <h2 className="m-3 subtitle"></h2>
-          <div className="is-flex-direction-column is-justify-content-center">
-            <h1 className="title">{playlist.name} - {playlist.description}</h1>
+          <div className="">
+            <h1 className="title">{playlist.name}</h1>
+            <h2 className="subtitle">{playlist.description}</h2>
             {tracksLoaded ? (
               tracks.items.map((track) => (
-                <div className="m-2" key={track.track.id}>{track.track.name}</div>
+                <TrackTile
+                  className="m-2"
+                  key={track.track.id}
+                  track={track.track}
+                ></TrackTile>
               ))
             ) : (
               <div>Loading tracks...</div>

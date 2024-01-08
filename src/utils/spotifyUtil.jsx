@@ -10,6 +10,7 @@ const scope = "user-read-private user-read-email";
 // For production vs dev
 const redirectUrl = "https://time-traveler.vercel.app/dashboard";
 //const redirectUrl = "http://localhost:4173/dashboard";
+//const redirectUrl = "http://localhost:5173/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {

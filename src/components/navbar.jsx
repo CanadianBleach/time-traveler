@@ -31,15 +31,16 @@ function NavBar() {
     // TODO: Are you sure pop up modal
     navEnd = (
       <>
-        <Link className="navbar-item" to="./" onClick={logoutClick}>
-          Log Out
-        </Link>
         <Link
           target="#blank"
           to={userData.external_urls.spotify}
           className="navbar-item"
         >
+          <div className="navbar-item">{userData.display_name}</div>
           <img src={userData.images[0].url} id="profile-img"></img>
+        </Link>
+        <Link className="navbar-item" to="./" onClick={logoutClick}>
+          Log Out
         </Link>
       </>
     );

@@ -117,7 +117,7 @@ async function profileInit() {
   // Todo setup user
   // Add to mongo
   localStorage.setItem("user_profile", JSON.stringify(userData));
-  localStorage.setItem("user_playlists", JSON.stringify(playlistData.items));
+  localStorage.setItem("user_playlists", JSON.stringify(playlistData));
 }
 
 async function redirectToSpotifyAuthorize() {

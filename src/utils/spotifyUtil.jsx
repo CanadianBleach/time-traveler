@@ -133,8 +133,6 @@ async function findDuplicateListens(data) {
     for (let t in tracks) {
       addTrack(tracks[t].track.id, data[d].id);
     }
-
-    console.log(getTracks());
   }
 }
 
@@ -147,6 +145,7 @@ function addTrack(trackId, playlistId) {
 
   // If no tracks init the first one
   if (!allTracks) {
+    // Track data structure
     allTracks = [
       {
         id: trackId,
@@ -178,7 +177,6 @@ function addTrack(trackId, playlistId) {
   });
   localStorage.setItem("user_tracks", JSON.stringify(allTracks));
 }
-// Track data structure
 
 async function redirectToSpotifyAuthorize() {
   const possible =
@@ -284,4 +282,5 @@ export {
   getProfile,
   getPlaylists,
   getPlaylist,
+  getTracks,
 };

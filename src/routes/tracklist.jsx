@@ -6,6 +6,7 @@ import {
   getPlaylist,
   getProfile,
   loggedIn,
+  getTracks,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import SongTile from "../components/track-tile";
@@ -20,16 +21,26 @@ const Tracklist = (props) => {
 
   const userData = getProfile();
   const playlist = getPlaylist(playlistId);
+  const trackData = getTracks();
 
+  
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
+  const [dupesLoaded, setDupesLoaded] = useState(false);
+
   useEffect(() => {
     (async () => {
       setTracksLoaded(false);
+      setDupesLoaded(false);
       const data = await fetchTracks(playlistId);
       if (data) {
         setTracks(data);
         setTracksLoaded(true);
+
+        // TODO
+        // Loop thorugh data
+        // Check each id, against 
+        console.log(data);
       }
     })();
   }, [playlistId]);

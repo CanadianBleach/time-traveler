@@ -19,27 +19,22 @@ const Tracklist = (props) => {
     window.location.pathname.lastIndexOf("/") + 1
   );
 
-  const userData = getProfile();
+  //const userData = getProfile();
   const playlist = getPlaylist(playlistId);
   const trackData = getTracks();
 
-  
+  console.log(trackData);
+
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
-  const [dupesLoaded, setDupesLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
       setTracksLoaded(false);
-      setDupesLoaded(false);
       const data = await fetchTracks(playlistId);
       if (data) {
         setTracks(data);
         setTracksLoaded(true);
-
-        // TODO
-        // Loop thorugh data
-        // Check each id, against 
         console.log(data);
       }
     })();
@@ -54,9 +49,7 @@ const Tracklist = (props) => {
           <div className="columns is-8">
             <div className="column">
               <h1 className="title ml-3">{playlist.name}</h1>
-              <h2 className="subtitle ml-3">
-                {playlist.description}
-              </h2>
+              <h2 className="subtitle ml-3">{playlist.description}</h2>
               <div className="">
                 {tracksLoaded ? (
                   tracks.items.map((track) => (

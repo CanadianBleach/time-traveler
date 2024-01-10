@@ -6,6 +6,7 @@ import {
   getPlaylist,
   getProfile,
   loggedIn,
+  getTracks,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import SongTile from "../components/track-tile";
@@ -18,11 +19,15 @@ const Tracklist = (props) => {
     window.location.pathname.lastIndexOf("/") + 1
   );
 
-  const userData = getProfile();
+  //const userData = getProfile();
   const playlist = getPlaylist(playlistId);
+  const trackData = getTracks();
+
+  console.log(trackData);
 
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
+
   useEffect(() => {
     (async () => {
       setTracksLoaded(false);
@@ -30,6 +35,7 @@ const Tracklist = (props) => {
       if (data) {
         setTracks(data);
         setTracksLoaded(true);
+        console.log(data);
       }
     })();
   }, [playlistId]);
@@ -40,22 +46,31 @@ const Tracklist = (props) => {
         <NavBar></NavBar>
         <div className="container">
           <div className="section"></div>
-          <div className="">
-            <h1 className="title">{playlist.name}</h1>
-            <h2 className="subtitle">{playlist.description}</h2>
-            {tracksLoaded ? (
-              tracks.items.map((track) => (
-                <TrackTile
-                  className="m-2"
-                  key={track.track.id}
-                  track={track.track}
-                ></TrackTile>
-              ))
-            ) : (
-              <div>Loading tracks...</div>
-            )}
-            <div className="section"></div>
+          <div className="columns is-8">
+            <div className="column">
+              <h1 className="title ml-3">{playlist.name}</h1>
+              <h2 className="subtitle ml-3">{playlist.description}</h2>
+              <div className="">
+                {tracksLoaded ? (
+                  tracks.items.map((track) => (
+                    <TrackTile
+                      className="m-2"
+                      key={track.track.id}
+                      track={track.track}
+                    ></TrackTile>
+                  ))
+                ) : (
+                  <div>Loading tracks...</div>
+                )}
+              </div>
+            </div>
+            <div className="column">
+              <h2 className="title has-text-right mr-3">
+                Here are some dupe listens we found..
+              </h2>
+            </div>
           </div>
+          <div className="section"></div>
         </div>
       </section>
     </>

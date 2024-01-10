@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../css/dashboard.css";
+import "../css/track-tile.css";
 import PropTypes from "prop-types";
 
 function TrackTile(props) {
@@ -8,7 +8,7 @@ function TrackTile(props) {
       <Link
         target="#blank"
         to={props.track.external_urls.spotify}
-        className="columns m-1"
+        className="columns m-1 track-tile"
       >
         <div className="column is-one-fifth">
           {props.track.album.images[2] ? (

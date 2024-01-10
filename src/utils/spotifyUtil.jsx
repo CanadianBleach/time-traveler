@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { func } from "prop-types";
 import { json } from "react-router-dom";
 
 const clientId = "865e4635c0004d49b740988d9b45e19d";
@@ -69,7 +70,7 @@ function getPlaylists() {
 }
 
 function getPlaylist(playlistId) {
-  let playlists = getPlaylists();
+  let playlists = getPlaylists().items;
   for (let p in playlists) {
     if (playlists[p].id == playlistId) return playlists[p];
   }
@@ -118,6 +119,63 @@ async function profileInit() {
   // Add to mongo
   localStorage.setItem("user_profile", JSON.stringify(userData));
   localStorage.setItem("user_playlists", JSON.stringify(playlistData));
+
+  findDuplicateListens(playlistData.items);
+}
+
+// Takes an array of playlists urls
+async function findDuplicateListens(data) {
+  console.log(data);
+
+  for (let d in data) {
+    let trackData = await fetchTracks(data[d].id);
+    let tracks = trackData.items;
+    for (let t in tracks) {
+      addTrack(tracks[t].track.id, data[d].id);
+    }
+  }
+}
+
+function getTracks() {
+  return JSON.parse(localStorage.getItem("user_tracks"));
+}
+
+function addTrack(trackId, playlistId) {
+  let allTracks = getTracks();
+
+  // If no tracks init the first one
+  if (!allTracks) {
+    // Track data structure
+    allTracks = [
+      {
+        id: trackId,
+        count: 1,
+        foundIn: [playlistId],
+      },
+    ];
+
+    localStorage.setItem("user_tracks", JSON.stringify(allTracks));
+    return;
+  }
+
+  // Loop through tracks to find and update duplicate songs
+  for (let t in allTracks) {
+    if (allTracks[t].id == trackId) {
+      // If the track is already in our list update count and playlist
+      allTracks[t].count++;
+      allTracks[t].foundIn.push(playlistId);
+      localStorage.setItem("user_tracks", JSON.stringify(allTracks));
+
+      return;
+    }
+  }
+
+  allTracks.push({
+    id: trackId,
+    count: 1,
+    foundIn: [playlistId],
+  });
+  localStorage.setItem("user_tracks", JSON.stringify(allTracks));
 }
 
 async function redirectToSpotifyAuthorize() {
@@ -224,4 +282,5 @@ export {
   getProfile,
   getPlaylists,
   getPlaylist,
+  getTracks,
 };

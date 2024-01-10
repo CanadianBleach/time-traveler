@@ -1,0 +1,8 @@
+.track-tile {
+  opacity: 100%;
+  transition: all 0.1s ease-in;
+}
+
+.track-tile:hover {
+  opacity: 50%;
+}

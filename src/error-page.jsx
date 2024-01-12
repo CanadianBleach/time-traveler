@@ -1,4 +1,5 @@
 import { useRouteError } from "react-router-dom";
+import { refreshTokenClick } from "./utils/spotifyUtil";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -12,6 +13,7 @@ export default function ErrorPage() {
         <i>{error.statusText || error.message}</i>
       </p>{" "}
       <button onClick={clearStorage}>Clear storage and reload.</button>
+      <button onClick={refreshTokenClick}>Refresh Token</button>
     </div>
   );
 }

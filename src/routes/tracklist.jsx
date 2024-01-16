@@ -22,16 +22,19 @@ const Tracklist = (props) => {
 
   //const userData = getProfile();
   const playlist = getPlaylist(playlistId);
-  const dupes = getDuplicatesFromId(playlistId);
-
-  console.log("dupes", dupes);
 
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
 
+  const [dupes, setDupes] = useState([playlistId]);
+  const [dupesLoaded, setDupesLoaded] = useState(false);
+
   useEffect(() => {
     (async () => {
       setTracksLoaded(false);
+      setDupesLoaded(false);
+      setDupes(getDuplicatesFromId(playlistId));
+      setDupesLoaded(true);
       const data = await fetchTracks(playlistId);
       if (data) {
         setTracks(data);
@@ -70,7 +73,7 @@ const Tracklist = (props) => {
                 Here are some dupe listens we found..
               </h2>
               <div className="">
-                {tracksLoaded ? (
+                {dupesLoaded ? (
                   dupes.map((track) => (
                     <TrackTile
                       className="m-2"

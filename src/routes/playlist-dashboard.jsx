@@ -17,8 +17,11 @@ function Dashboard() {
     }
   }, [navigate]);
 
-  const playlists = getPlaylists();
+  const playlistData = getPlaylists();
+  const playlists = playlistData.items;
   const userData = getProfile();
+
+  console.log(playlists);
 
   if (!playlists) {
     return (
@@ -43,7 +46,7 @@ function Dashboard() {
   }
   const playlistTiles = (
     <>
-      {playlists.items.map((track) => (
+      {playlists.map((track) => (
         <PlaylistTile
           key={track.id}
           playlistId={track.id}

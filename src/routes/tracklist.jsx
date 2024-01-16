@@ -21,9 +21,9 @@ const Tracklist = (props) => {
 
   //const userData = getProfile();
   const playlist = getPlaylist(playlistId);
-  const trackData = getTracks();
+  //const trackData = getTracks();
 
-  console.log(trackData);
+  console.log(playlist);
 
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
@@ -35,7 +35,7 @@ const Tracklist = (props) => {
       if (data) {
         setTracks(data);
         setTracksLoaded(true);
-        console.log(data);
+        console.log("tracks", data);
       }
     })();
   }, [playlistId]);

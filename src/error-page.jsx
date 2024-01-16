@@ -19,6 +19,6 @@ export default function ErrorPage() {
 }
 
 function clearStorage() {
-  localStorage.clear;
+  localStorage.clear();
   window.location = "../";
 }

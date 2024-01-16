@@ -8,10 +8,9 @@ const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
 
-// For production vs dev
-const redirectUrl = "https://time-traveler.vercel.app/dashboard";
+//const redirectUrl = "https://time-traveler.vercel.app/dashboard";
 //const redirectUrl = "http://localhost:4173/dashboard";
-//const redirectUrl = "http://localhost:5173/dashboard";
+const redirectUrl = "http://localhost:5173/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -65,14 +64,19 @@ async function fetchPlaylists() {
   return await response.json();
 }
 
+// Returns playlists from localstorage
 function getPlaylists() {
   return JSON.parse(localStorage.getItem("user_playlists"));
 }
 
+//Gets specific playlist by id
 function getPlaylist(playlistId) {
-  let playlists = getPlaylists().items;
+  let playlistData = getPlaylists();
+  let playlists = playlistData.items;
   for (let p in playlists) {
-    if (playlists[p].id == playlistId) return playlists[p];
+    if (playlists[p].id == playlistId) {
+      return playlists[p];
+    }
   }
 
   return null;

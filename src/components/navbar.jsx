@@ -8,9 +8,9 @@ import "../css/global-styles.css";
 function NavBar() {
   let navStart;
   let navEnd;
+  const userData = getProfile();
 
   if (loggedIn()) {
-    const userData = getProfile();
     navStart = (
       <>
         <div className="navbar-brand">

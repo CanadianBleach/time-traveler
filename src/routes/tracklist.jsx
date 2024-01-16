@@ -7,6 +7,7 @@ import {
   getProfile,
   loggedIn,
   getTracks,
+  getDuplicatesFromId,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import SongTile from "../components/track-tile";
@@ -21,9 +22,9 @@ const Tracklist = (props) => {
 
   //const userData = getProfile();
   const playlist = getPlaylist(playlistId);
-  //const trackData = getTracks();
+  const dupes = getDuplicatesFromId(playlistId);
 
-  console.log(playlist);
+  console.log("dupes", dupes);
 
   const [tracks, setTracks] = useState([playlistId]);
   const [tracksLoaded, setTracksLoaded] = useState(false);
@@ -68,6 +69,19 @@ const Tracklist = (props) => {
               <h2 className="title has-text-right mr-3">
                 Here are some dupe listens we found..
               </h2>
+              <div className="">
+                {tracksLoaded ? (
+                  dupes.map((track) => (
+                    <TrackTile
+                      className="m-2"
+                      key={track.id}
+                      track={track.track}
+                    ></TrackTile>
+                  ))
+                ) : (
+                  <div>Loading tracks...</div>
+                )}
+              </div>
             </div>
           </div>
           <div className="section"></div>

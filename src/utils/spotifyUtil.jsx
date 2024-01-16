@@ -8,9 +8,9 @@ const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
 
-//const redirectUrl = "https://time-traveler.vercel.app/dashboard";
+const redirectUrl = "https://time-traveler.vercel.app/dashboard";
 //const redirectUrl = "http://localhost:4173/dashboard";
-const redirectUrl = "http://localhost:5173/dashboard";
+//const redirectUrl = "http://localhost:5173/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -115,6 +115,16 @@ if (code) {
   await profileInit();
 }
 
+function getDuplicatesFromId(playlistId) {
+  const tracks = getTracks();
+  let dupes = [];
+  for (let t in tracks) {
+    if (tracks[t].foundIn.includes(playlistId) && tracks[t].count > 1) dupes.push(tracks[t]);
+  }
+
+  return dupes;
+}
+
 async function profileInit() {
   let userData = await fetchProfile();
   let playlistData = await fetchPlaylists();
@@ -129,13 +139,12 @@ async function profileInit() {
 
 // Takes an array of playlists urls
 async function findDuplicateListens(data) {
-  console.log(data);
-
   for (let d in data) {
     let trackData = await fetchTracks(data[d].id);
     let tracks = trackData.items;
     for (let t in tracks) {
-      addTrack(tracks[t].track.id, data[d].id);
+      //Pass track id and playlist id
+      addTrack(tracks[t].track, data[d].id);
     }
   }
 }
@@ -144,7 +153,7 @@ function getTracks() {
   return JSON.parse(localStorage.getItem("user_tracks"));
 }
 
-function addTrack(trackId, playlistId) {
+function addTrack(track, playlistId) {
   let allTracks = getTracks();
 
   // If no tracks init the first one
@@ -152,7 +161,8 @@ function addTrack(trackId, playlistId) {
     // Track data structure
     allTracks = [
       {
-        id: trackId,
+        track: track,
+        id: track.id,
         count: 1,
         foundIn: [playlistId],
       },
@@ -164,7 +174,7 @@ function addTrack(trackId, playlistId) {
 
   // Loop through tracks to find and update duplicate songs
   for (let t in allTracks) {
-    if (allTracks[t].id == trackId) {
+    if (allTracks[t].id == track.id) {
       // If the track is already in our list update count and playlist
       allTracks[t].count++;
       allTracks[t].foundIn.push(playlistId);
@@ -174,11 +184,13 @@ function addTrack(trackId, playlistId) {
     }
   }
 
-  allTracks.push({
-    id: trackId,
+  allTracks.unshift({
+    track: track,
+    id: track.id,
     count: 1,
     foundIn: [playlistId],
   });
+
   localStorage.setItem("user_tracks", JSON.stringify(allTracks));
 }
 
@@ -287,4 +299,5 @@ export {
   getPlaylists,
   getPlaylist,
   getTracks,
+  getDuplicatesFromId,
 };

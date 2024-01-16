@@ -21,7 +21,7 @@ function Dashboard() {
   const playlists = playlistData.items;
   const userData = getProfile();
 
-  console.log(playlists);
+  console.log("Playlists", playlists);
 
   if (!playlists) {
     return (

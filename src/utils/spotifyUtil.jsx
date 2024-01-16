@@ -8,9 +8,9 @@ const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
 
-//const redirectUrl = "https://time-traveler.vercel.app/dashboard";
+const redirectUrl = "https://time-traveler.vercel.app/dashboard";
 //const redirectUrl = "http://localhost:4173/dashboard";
-const redirectUrl = "http://localhost:5173/dashboard";
+//const redirectUrl = "http://localhost:5173/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {

@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TrackTile from "../components/track-tile";
 
-const Tracklist = (props) => {
+const Tracklist = () => {
   const playlistId = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
   );

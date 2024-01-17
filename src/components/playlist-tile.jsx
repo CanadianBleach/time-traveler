@@ -1,17 +1,23 @@
 import { Link } from "react-router-dom";
-import "../css/dashboard.css"
+import "../css/dashboard.css";
 import PropTypes from "prop-types";
 
 function PlaylistTile(props) {
   return (
     <>
-      <figure className="card m-2">
-        <Link to={`../tracklist/${props.playlistId}`}>
-          <img
-            className="image is-128x128 card-body p-1"
-            src={props.img}
-            alt="playlist-cover"
-          ></img>
+      <figure className="m-2">
+        <Link
+          className="has-text-dark"
+          to={`../tracklist/${props.playlistId}`}
+        >
+          <div className="playlist-container">
+            <div className="playlist-name">{props.playlistName}</div>
+            <img
+              className="playlist-image is-128x128 p-1"
+              src={props.img}
+              alt="playlist-cover"
+            ></img>
+          </div>
         </Link>
       </figure>
     </>
@@ -19,6 +25,7 @@ function PlaylistTile(props) {
 }
 
 PlaylistTile.propTypes = {
+  playlistName: PropTypes.string,
   img: PropTypes.string,
   playlistId: PropTypes.string,
 };

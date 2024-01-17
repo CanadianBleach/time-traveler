@@ -1,8 +1,37 @@
-.card {
-  opacity: 100%;
+.playlist-container {
+  transition: all 0.2s ease-in;
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2);
+}
+
+.playlist-container:hover {
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+}
+
+.playlist-image {
+  display: block;
+  max-width: 128px;
+  height: 128px;
+  object-fit: cover;
+  opacity: 50%;
   transition: all 0.1s ease-in;
 }
 
-.card:hover {
-  opacity: 50%;
+.playlist-image:hover {
+  display: block;
+  opacity: 100%;
+}
+
+.playlist-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-weight: bold;
+  z-index: 1;
+  pointer-events: none;
 }

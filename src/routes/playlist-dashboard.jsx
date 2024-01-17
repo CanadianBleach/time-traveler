@@ -46,11 +46,12 @@ function Dashboard() {
   }
   const playlistTiles = (
     <>
-      {playlists.map((track) => (
+      {playlists.map((playlist) => (
         <PlaylistTile
-          key={track.id}
-          playlistId={track.id}
-          img={track.images[0].url}
+          key={playlist.id}
+          playlistId={playlist.id}
+          img={playlist.images[0].url}
+          playlistName={playlist.name}
         ></PlaylistTile>
       ))}
     </>

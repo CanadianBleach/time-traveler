@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { func } from "prop-types";
 import { json } from "react-router-dom";
+import {v4 as uuidv4} from 'uuid';
+
 
 const clientId = "865e4635c0004d49b740988d9b45e19d";
 
@@ -155,6 +157,12 @@ function getTracks() {
 
 function addTrack(track, playlistId) {
   let allTracks = getTracks();
+  let id = uuidv4();
+
+  // handles local files and assigns id
+  if (track.id)
+    id = track.id;
+
 
   // If no tracks init the first one
   if (!allTracks) {
@@ -162,7 +170,7 @@ function addTrack(track, playlistId) {
     allTracks = [
       {
         track: track,
-        id: track.id,
+        id: id,
         count: 1,
         foundIn: [playlistId],
       },
@@ -186,7 +194,7 @@ function addTrack(track, playlistId) {
 
   allTracks.unshift({
     track: track,
-    id: track.id,
+    id: id,
     count: 1,
     foundIn: [playlistId],
   });

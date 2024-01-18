@@ -7,17 +7,17 @@ function PlaylistTile(props) {
     <>
       <figure className="m-2">
         <Link
-          className="has-text-dark"
+          className="has-text-dark playlist-container"
           to={`../tracklist/${props.playlistId}`}
         >
-          <div className="playlist-container">
-            <div className="playlist-name">{props.playlistName}</div>
-            <img
-              className="playlist-image is-128x128 p-1"
-              src={props.img}
-              alt="playlist-cover"
-            ></img>
+          <div className="playlist-name has-text-centered">
+            {props.playlistName}
           </div>
+          <img
+            className="playlist-image is-128x128 p-1"
+            src={props.img}
+            alt="playlist-cover"
+          ></img>
         </Link>
       </figure>
     </>

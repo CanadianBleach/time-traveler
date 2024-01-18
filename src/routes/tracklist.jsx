@@ -33,13 +33,17 @@ const Tracklist = () => {
     (async () => {
       setTracksLoaded(false);
       setDupesLoaded(false);
-      setDupes(getDuplicatesFromId(playlistId));
+      const dupesData = getDuplicatesFromId(playlistId);
+      setDupes(dupesData);
       setDupesLoaded(true);
       const data = await fetchTracks(playlistId);
       if (data) {
         setTracks(data);
         setTracksLoaded(true);
         console.log("tracks", data);
+      }
+      if (dupesData) {
+        console.log("dupes", dupesData);
       }
     })();
   }, [playlistId]);

@@ -3,16 +3,12 @@ import { func } from "prop-types";
 import { json } from "react-router-dom";
 import {v4 as uuidv4} from 'uuid';
 
-
-const clientId = "865e4635c0004d49b740988d9b45e19d";
+const clientId = import.meta.env.VITE_CLIENT_ID;
+const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = "user-read-private user-read-email";
-
-const redirectUrl = "https://time-traveler.vercel.app/dashboard";
-//const redirectUrl = "http://localhost:4173/dashboard";
-//const redirectUrl = "http://localhost:5173/dashboard";
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -56,7 +52,7 @@ function getProfile() {
 
 async function fetchPlaylists() {
   const response = await fetch(
-    "https://api.spotify.com/v1/me/playlists?limit=50",
+    "https://api.spotify.com/v1/me/playlists?limit=5",
     {
       method: "GET",
       headers: { Authorization: "Bearer " + currentToken.access_token },

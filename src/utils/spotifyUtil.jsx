@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { func } from "prop-types";
 import { json } from "react-router-dom";
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
@@ -52,7 +52,7 @@ function getProfile() {
 
 async function fetchPlaylists() {
   const response = await fetch(
-    "https://api.spotify.com/v1/me/playlists?limit=5",
+    "https://api.spotify.com/v1/me/playlists?limit=100",
     {
       method: "GET",
       headers: { Authorization: "Bearer " + currentToken.access_token },
@@ -117,85 +117,76 @@ function getDuplicatesFromId(playlistId) {
   const tracks = getTracks();
   let dupes = [];
   for (let t in tracks) {
-    if (tracks[t].foundIn.includes(playlistId) && tracks[t].count > 1) dupes.push(tracks[t]);
+    if (tracks[t].foundIn.includes(playlistId) && tracks[t].count > 1)
+      dupes.push(tracks[t]);
   }
 
   return dupes;
 }
 
 async function profileInit() {
-  let userData = await fetchProfile();
-  let playlistData = await fetchPlaylists();
+  const userData = await fetchProfile();
+  const playlistData = await fetchPlaylists();
+  const songs = await createSongStruct(playlistData.items);
 
-  // Todo setup user
-  // Add to mongo
+  // TODO: Add to mongo
   localStorage.setItem("user_profile", JSON.stringify(userData));
   localStorage.setItem("user_playlists", JSON.stringify(playlistData));
-
-  findDuplicateListens(playlistData.items);
+  localStorage.setItem("user_tracks", JSON.stringify(songs));
 }
 
-// Takes an array of playlists urls
-async function findDuplicateListens(data) {
-  for (let d in data) {
-    let trackData = await fetchTracks(data[d].id);
-    let tracks = trackData.items;
-    for (let t in tracks) {
-      //Pass track id and playlist id
-      addTrack(tracks[t].track, data[d].id);
+async function createSongStruct(playlists) {
+  let songs = [];
+
+  // Add songs
+  for (let p in playlists) {
+    const currList = await fetchTracks(playlists[p].id);
+    for (let s in currList.items) {
+      // Push track and playlist to array
+      songs.push({
+        track: currList.items[s].track,
+        playlistId: playlists[p].id,
+      });
     }
   }
+
+  // Remove duplicates
+  let returnData = [];
+
+  // Loop thorugh all songs
+  for (let s in songs) {
+    if (songs[s] == null) break;
+
+    // Handle spotify local files
+    let id = uuidv4();
+    if (songs[s].track.id) id = songs[s].track.id;
+
+    for (let d in returnData) {
+      // We found a song we have, update info
+      if (returnData[d].id == id) {
+        returnData[d].count++;
+        returnData[d].foundIn.push(songs[s].playlistId);
+        break;
+      }
+    }
+
+    // Song was not a duplicate create base object for song
+    let songObj = {
+      track: songs[s].track,
+      id: id,
+      count: 1,
+      foundIn: [songs[s].playlistId],
+    };
+
+    returnData.push(songObj);
+  }
+
+  console.log("returnData", returnData);
+  return returnData;
 }
 
 function getTracks() {
   return JSON.parse(localStorage.getItem("user_tracks"));
-}
-
-function addTrack(track, playlistId) {
-  let allTracks = getTracks();
-  let id = uuidv4();
-
-  // handles local files and assigns id
-  if (track.id)
-    id = track.id;
-
-
-  // If no tracks init the first one
-  if (!allTracks) {
-    // Track data structure
-    allTracks = [
-      {
-        track: track,
-        id: id,
-        count: 1,
-        foundIn: [playlistId],
-      },
-    ];
-
-    localStorage.setItem("user_tracks", JSON.stringify(allTracks));
-    return;
-  }
-
-  // Loop through tracks to find and update duplicate songs
-  for (let t in allTracks) {
-    if (allTracks[t].id == track.id) {
-      // If the track is already in our list update count and playlist
-      allTracks[t].count++;
-      allTracks[t].foundIn.push(playlistId);
-      localStorage.setItem("user_tracks", JSON.stringify(allTracks));
-
-      return;
-    }
-  }
-
-  allTracks.unshift({
-    track: track,
-    id: id,
-    count: 1,
-    foundIn: [playlistId],
-  });
-
-  localStorage.setItem("user_tracks", JSON.stringify(allTracks));
 }
 
 async function redirectToSpotifyAuthorize() {

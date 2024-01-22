@@ -28,19 +28,6 @@ function ProfileInit() {
   return (
     <>
       <section className="hero is-fullheight">
-        <div className="is-flex">
-          <div className="block m-1"></div>
-          <a className="m-3 has-text-dark" href="">
-            Posts
-          </a>
-          <a
-            className="m-3 has-text-dark"
-            href="https://github.com/CanadianBleach/"
-            target="#blank"
-          >
-            Github
-          </a>
-        </div>
         <div className="hero-body has-text-centered is-flex-direction-column is-justify-content-space-evenly mb-5">
           <div className="m-6">
             <h2 className="title is-3 has-text-dark">

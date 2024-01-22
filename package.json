@@ -10,12 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@mdi/light-font": "^0.2.63",
     "bulma": "^0.9.4",
     "dayjs": "^1.11.10",
+    "material-icons": "^1.13.12",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
     "react-router": "^6.21.0",
     "react-router-dom": "^6.21.1",
     "uuid": "^9.0.1"

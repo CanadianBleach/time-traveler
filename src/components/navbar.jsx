@@ -73,7 +73,7 @@ function NavBar() {
   return (
     <>
       <nav
-        className="navbar mw-70"
+        className="navbar"
         role="navigation"
         aria-label="main navigation"
       >

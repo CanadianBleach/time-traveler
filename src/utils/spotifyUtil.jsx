@@ -52,7 +52,7 @@ function getProfile() {
 
 async function fetchPlaylists() {
   const response = await fetch(
-    "https://api.spotify.com/v1/me/playlists?limit=50",
+    "https://api.spotify.com/v1/me/playlists?limit=15",
     {
       method: "GET",
       headers: { Authorization: "Bearer " + currentToken.access_token },
@@ -107,10 +107,6 @@ if (code) {
 
   const updatedUrl = url.search ? url.href : url.href.replace("?", "");
   window.history.replaceState({}, document.title, updatedUrl);
-
-  // Fetch and setup profile
-  // Add to mongo
-  await profileInit();
 }
 
 function getDuplicatesFromId(playlistId) {
@@ -133,6 +129,8 @@ async function profileInit() {
   localStorage.setItem("user_profile", JSON.stringify(userData));
   localStorage.setItem("user_playlists", JSON.stringify(playlistData));
   localStorage.setItem("user_tracks", JSON.stringify(songs));
+
+  return true;
 }
 
 async function createSongStruct(playlists) {
@@ -264,6 +262,7 @@ async function refreshToken() {
 
 // Click handlers
 async function loginWithSpotifyClick() {
+  localStorage.setItem("logged_in", false);
   await redirectToSpotifyAuthorize();
 }
 
@@ -279,7 +278,14 @@ async function refreshTokenClick() {
 }
 
 function loggedIn() {
-  return getProfile();
+  return localStorage.getItem("logged_in");
+}
+
+function tokenExpired() {
+  const now = new Date();
+  const expiry = new Date(localStorage.getItem("expires"));
+
+  return false;
 }
 
 export {
@@ -295,4 +301,6 @@ export {
   getPlaylist,
   getTracks,
   getDuplicatesFromId,
+  tokenExpired,
+  profileInit,
 };

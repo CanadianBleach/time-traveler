@@ -7,6 +7,7 @@ import ErrorPage from "./error-page";
 // Page imports
 import Dashboard from "./routes/playlist-dashboard";
 import Tracklist from "./routes/tracklist";
+import ProfileInit from "./routes/profile-init";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -14,6 +15,11 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/create-profile",
+    element: <ProfileInit />,
     errorElement: <ErrorPage />,
   },
   {

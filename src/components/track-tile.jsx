@@ -13,7 +13,9 @@ function TrackTile(props) {
         >
           <div className="card-body columns">
             <div className="content column">
-              <div className="title is-size-5 has-text-right">{props.track.name}</div>
+              <div className="title is-size-5 has-text-right">
+                {props.track.name}
+              </div>
               <div className="subtitle is-size-5 has-text-right">
                 {props.track.artists[0].name}
               </div>

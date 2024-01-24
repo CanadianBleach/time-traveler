@@ -10,7 +10,7 @@ function PlaylistTile(props) {
           className="has-text-dark playlist-container"
           to={`../tracklist/${props.playlistId}`}
         >
-          <div className="playlist-name has-text-centered">
+          <div className="playlist-name subtitle has-text-centered">
             {props.playlistName}
           </div>
           <img

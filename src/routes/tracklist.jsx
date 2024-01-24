@@ -59,9 +59,12 @@ const Tracklist = () => {
         <NavBar></NavBar>
         <div className="container">
           <div className="section"></div>
-          <button className="button is-text mb-5" onClick={goHome}>
-            <IoArrowBackOutline className="arrow" />
-          </button>
+          <div className="is-flex is-flex-direction-row is-justify-content-space-between">
+            <button className="button is-text mb-5" onClick={goHome}>
+              <IoArrowBackOutline className="arrow" />
+            </button>
+            {!dupesLoaded ? <div className="subtitle">Loading...</div> : <></>}
+          </div>
           <div className="columns mb-5">
             <div className="column">
               <h1 className="title">{playlist.name}</h1>
@@ -83,7 +86,7 @@ const Tracklist = () => {
                     ></TrackTile>
                   ))
                 ) : (
-                  <div>Loading tracks...</div>
+                  <></>
                 )}
               </div>
             </div>
@@ -99,7 +102,7 @@ const Tracklist = () => {
                     ></TrackTile>
                   ))
                 ) : (
-                  <div>Loading tracks...</div>
+                  <></>
                 )}
               </div>
             </div>

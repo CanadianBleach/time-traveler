@@ -8,6 +8,7 @@ import ErrorPage from "./error-page";
 import Dashboard from "./routes/playlist-dashboard";
 import Tracklist from "./routes/tracklist";
 import ProfileInit from "./routes/profile-init";
+import FoundIn from "./routes/found-in";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
   {
     path: "/tracklist/:id",
     element: <Tracklist />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/track-view/:id",
+    element: <FoundIn />,
     errorElement: <ErrorPage />,
   },
 ]);

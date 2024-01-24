@@ -45,6 +45,7 @@ function Dashboard() {
               {playlistTiles}
             </div>
           </div>
+          <div className="section"></div>
         </div>
       </section>
     </>

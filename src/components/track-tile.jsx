@@ -1,17 +1,25 @@
 import { Link } from "react-router-dom";
 import "../css/track-tile.css";
 import PropTypes from "prop-types";
+import { getPlaylistsIn } from "../utils/spotifyUtil";
 
 function TrackTile(props) {
+  // Defines side track tile is on
   let flexDir = "card-body is-flex is-align-content-center is-flex-direction-row"
   if (props.reversed) {
     flexDir = "card-body is-flex is-align-content-center is-flex-direction-row-reverse"
   }
+  let textAlign = "content p-1"
+  if (props.reversed) {
+    textAlign = "content p-1 has-text-right"
+  }
+
+  const foundIn = getPlaylistsIn(props.track.id);
+
   return (
     <>
       <Link
-        target="#blank"
-        to={props.track.external_urls.spotify}
+        to={`/track-view/${props.track.id}`}
         className="track-tile card"
       >
         <div className={flexDir}>
@@ -28,7 +36,7 @@ function TrackTile(props) {
               ></img>
             )}
           </div>
-          <div className="content p-1">
+          <div className={textAlign}>
             <div className="title is-size-5">{props.track.name}</div>
             <div className="subtitle is-size-5">
               {props.track.artists[0].name}

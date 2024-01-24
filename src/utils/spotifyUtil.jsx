@@ -67,6 +67,30 @@ function getPlaylists() {
   return JSON.parse(localStorage.getItem("user_playlists"));
 }
 
+const getPlaylistsIn = (songId) => {
+  const tracks = getTracks();
+  let foundIn = [];
+  for (let t in tracks) {
+    if (tracks[t].id == songId) {
+      foundIn.push(tracks[t]);
+    }
+  }
+
+  return foundIn;
+};
+
+//Gets specific playlist by id
+function getTrack(trackId) {
+  let tracks = getTracks();
+  for (let t in tracks) {
+    if (tracks[t].id == trackId) {
+      return tracks[t];
+    }
+  }
+
+  return null;
+}
+
 //Gets specific playlist by id
 function getPlaylist(playlistId) {
   let playlistData = getPlaylists();
@@ -303,4 +327,6 @@ export {
   getDuplicatesFromId,
   tokenExpired,
   profileInit,
+  getPlaylistsIn,
+  getTrack,
 };

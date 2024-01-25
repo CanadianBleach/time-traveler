@@ -48,7 +48,6 @@ const Tracklist = () => {
         setTracksLoaded(true);
         console.log("tracks", trackData);
         //TODO save data so it doesnt refresh every time
-        localStorage.setItem("");
       }
 
       if (dupesData) {

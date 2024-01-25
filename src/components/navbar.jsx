@@ -9,6 +9,7 @@ function NavBar() {
   let navStart;
   let navEnd;
   const userData = getProfile();
+  console.log(userData);
 
   if (loggedIn()) {
     navStart = (
@@ -31,13 +32,18 @@ function NavBar() {
     // TODO: Are you sure pop up modal
     navEnd = (
       <>
-        <Link
-          target="#blank"
-          to=""
-          className="navbar-item"
-        >
+        <Link target="#blank" to="" className="navbar-item">
           <div className="navbar-item">{userData.display_name}</div>
-          <img src={userData.images[0].url} id="profile-img"></img>
+
+          {userData.images[0] ? (
+            <img src={userData.images[0].url} id="profile-img"></img>
+          ) : (
+            <img
+              className="card-media"
+              src="https://placekitten.com/64/64"
+              id="profile-img"
+            ></img>
+          )}
         </Link>
         <Link className="navbar-item" to="./" onClick={logoutClick}>
           Log Out
@@ -72,11 +78,7 @@ function NavBar() {
 
   return (
     <>
-      <nav
-        className="navbar"
-        role="navigation"
-        aria-label="main navigation"
-      >
+      <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-menu">
           <div className="navbar-start">{navStart}</div>
           <div className="navbar-end">{navEnd}</div>

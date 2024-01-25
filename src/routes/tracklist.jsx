@@ -4,6 +4,8 @@ import {
   fetchTracks,
   getPlaylist,
   getDuplicatesFromId,
+  tokenExpired,
+  refreshTokenClick,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import { useEffect, useState } from "react";
@@ -18,6 +20,12 @@ const Tracklist = () => {
   const playlistId = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
   );
+
+  if (tokenExpired()) {
+    console.log(tokenExpired());
+    refreshTokenClick();
+    return;
+  }
 
   const playlist = getPlaylist(playlistId);
 
@@ -39,6 +47,8 @@ const Tracklist = () => {
         setTracks(trackData);
         setTracksLoaded(true);
         console.log("tracks", trackData);
+        //TODO save data so it doesnt refresh every time
+        localStorage.setItem("");
       }
 
       if (dupesData) {

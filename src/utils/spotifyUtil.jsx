@@ -33,7 +33,7 @@ const currentToken = {
 
     const now = new Date();
     const expiry = new Date(now.getTime() + expires_in * 1000);
-    localStorage.setItem("expires", expiry);
+    localStorage.setItem("expires", JSON.stringify(expiry));
   },
 };
 
@@ -307,9 +307,13 @@ function loggedIn() {
 
 function tokenExpired() {
   const now = new Date();
-  const expiry = new Date(localStorage.getItem("expires"));
+  const expiry = localStorage.getItem("expires");
 
-  return false;
+  if (!expiry)
+    return true;
+
+
+  return now > expiry;
 }
 
 export {

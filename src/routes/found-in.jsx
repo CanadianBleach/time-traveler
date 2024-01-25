@@ -16,6 +16,7 @@ function FoundIn() {
     foundIn.push(getPlaylist(track.foundIn[t]));
   }
 
+  console.log("foundin", foundIn);
   const tiles = foundIn.map((playlist) => {
     <div>{playlist.id}</div>
   });

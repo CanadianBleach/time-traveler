@@ -33,7 +33,7 @@ function NavBar() {
       <>
         <Link
           target="#blank"
-          to={userData.external_urls.spotify}
+          to=""
           className="navbar-item"
         >
           <div className="navbar-item">{userData.display_name}</div>

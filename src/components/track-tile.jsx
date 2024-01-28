@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "../css/track-tile.css";
 import PropTypes from "prop-types";
-import { getPlaylistsIn } from "../utils/spotifyUtil";
 
 function TrackTile(props) {
   // Defines side track tile is on
@@ -14,8 +13,6 @@ function TrackTile(props) {
     textAlign = "content p-1 has-text-right"
   }
 
-  const foundIn = getPlaylistsIn(props.track.id);
-
   return (
     <>
       <Link
@@ -26,12 +23,12 @@ function TrackTile(props) {
           <div className="p-1">
             {props.track.album.images[2] ? (
               <img
-                className="card-media"
+                className="image is-64x64 card-media"
                 src={props.track.album.images[2].url}
               ></img>
             ) : (
               <img
-                className="card-media"
+                className="image is-64x64 card-media"
                 src="https://placekitten.com/64/64"
               ></img>
             )}

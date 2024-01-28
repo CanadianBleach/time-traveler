@@ -3,4 +3,4 @@
 ## Site currently limited, contact for access.
 
 ## Live Site
-Visit the site [here](https://time-traveler.vercel.app/).
+Start [traveling](https://time-traveler.vercel.app/)

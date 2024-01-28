@@ -21,12 +21,6 @@ const Tracklist = () => {
     window.location.pathname.lastIndexOf("/") + 1
   );
 
-  if (tokenExpired()) {
-    console.log(tokenExpired());
-    refreshTokenClick();
-    return;
-  }
-
   const playlist = getPlaylist(playlistId);
 
   const [tracks, setTracks] = useState([playlistId]);
@@ -36,6 +30,12 @@ const Tracklist = () => {
   const [dupesLoaded, setDupesLoaded] = useState(false);
 
   useEffect(() => {
+    if (tokenExpired()) {
+      console.log(tokenExpired());
+      refreshTokenClick();
+      return;
+    }
+
     (async () => {
       setTracksLoaded(false);
       setDupesLoaded(false);
@@ -58,7 +58,7 @@ const Tracklist = () => {
     })();
   }, [playlistId]);
 
-  const goHome = () => {
+  const goBack = () => {
     navigate("../");
   };
 
@@ -69,7 +69,7 @@ const Tracklist = () => {
         <div className="container">
           <div className="section"></div>
           <div className="is-flex is-flex-direction-row is-justify-content-space-between">
-            <button className="button is-text mb-5" onClick={goHome}>
+            <button className="button is-text mb-5" onClick={goBack}>
               <IoArrowBackOutline className="arrow" />
             </button>
             {!dupesLoaded ? <div className="subtitle">Loading...</div> : <></>}

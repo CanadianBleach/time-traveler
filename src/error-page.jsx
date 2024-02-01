@@ -5,6 +5,10 @@ export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);
 
+  console.log("error-status", error.statusText)
+  if (error.status === 401)
+    refreshTokenClick();
+
   return (
     <section className="hero is-fullheight">
       <div className="hero-body is-flex-direction-column is-justify-content-center">

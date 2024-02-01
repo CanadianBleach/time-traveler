@@ -30,12 +30,6 @@ const Tracklist = () => {
   const [dupesLoaded, setDupesLoaded] = useState(false);
 
   useEffect(() => {
-    if (tokenExpired()) {
-      console.log(tokenExpired());
-      refreshTokenClick();
-      return;
-    }
-
     (async () => {
       setTracksLoaded(false);
       setDupesLoaded(false);
@@ -44,6 +38,9 @@ const Tracklist = () => {
       const trackData = await fetchTracks(playlistId);
 
       if (trackData) {
+        if (trackData.error == 401)
+          refreshTokenClick();
+
         setTracks(trackData);
         setTracksLoaded(true);
         console.log("tracks", trackData);

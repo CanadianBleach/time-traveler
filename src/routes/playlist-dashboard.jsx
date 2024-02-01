@@ -1,16 +1,8 @@
 import "../css/dashboard.css";
-import React from "react";
-import ReactDOM from "react-dom";
 import NavBar from "../components/navbar";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import {
   getPlaylists,
   getProfile,
-  loggedIn,
-  profileInit,
-  refreshTokenClick,
-  tokenExpired,
 } from "../utils/spotifyUtil";
 import PlaylistTile from "../components/playlist-tile";
 

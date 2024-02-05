@@ -38,9 +38,6 @@ const Tracklist = () => {
       const trackData = await fetchTracks(playlistId);
 
       if (trackData) {
-        if (trackData.error == 401)
-          refreshTokenClick();
-
         setTracks(trackData);
         setTracksLoaded(true);
         console.log("tracks", trackData);

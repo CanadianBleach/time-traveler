@@ -2,17 +2,20 @@ import { useRouteError } from "react-router-dom";
 import { refreshTokenClick } from "./utils/spotifyUtil";
 
 export default function ErrorPage() {
-  refreshTokenClick();
   const error = useRouteError();
   console.error(error);
 
-  console.log("error-status", error.statusText);
+  console.log("error-status", error);
+
+  if (error.status == 401) refreshTokenClick();
 
   return (
     <section className="hero is-fullheight">
       <div className="hero-body is-flex-direction-column is-justify-content-center">
         <h1>Oops!</h1>
-        <p>Sorry, an unexpected error has occurred.</p>
+        <p>
+          Sorry, an unexpected error has occurred, or you session has expired.
+        </p>
         <p>
           <i>{error.statusText || error.message}</i>
         </p>
@@ -22,14 +25,14 @@ export default function ErrorPage() {
           id="login-button"
           onClick={refreshTokenClick}
         >
-          Refresh Token
+          Refresh Session
         </button>
         <button
           className="button is-success m-3 is-inverted is-medium"
           id="login-button"
           onClick={clearStorage}
         >
-          Clear & Restart
+          Logout
         </button>
       </div>
     </section>

@@ -2,12 +2,11 @@ import { useRouteError } from "react-router-dom";
 import { refreshTokenClick } from "./utils/spotifyUtil";
 
 export default function ErrorPage() {
+  refreshTokenClick();
   const error = useRouteError();
   console.error(error);
 
-  console.log("error-status", error.statusText)
-  if (error.status === 401)
-    refreshTokenClick();
+  console.log("error-status", error.statusText);
 
   return (
     <section className="hero is-fullheight">

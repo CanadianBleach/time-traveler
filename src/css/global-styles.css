@@ -3,18 +3,16 @@
 }
 
 #login-button {
-  background-color: #54d88200;
+  background-color: #ffffff00;
   transition: 0.3s ease;
+  border: none;
 }
 
 #login-button:hover {
-  background-color: #54d88228;
+  background-color: #ffffff46;
 }
 
 #profile-img {
   overflow: hidden;
   border-radius: 50%;
-}
-
-.navbar {
 }

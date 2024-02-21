@@ -43,7 +43,7 @@ function FoundIn() {
             <IoArrowBackOutline className="arrow" />
           </button>
           <Link
-            target="#blank"
+            target="_blank"
             to={track.track.external_urls.spotify}
             className="columns"
           >

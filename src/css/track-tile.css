@@ -8,3 +8,14 @@
 .track-tile:hover {
   opacity: 50%;
 }
+
+.image {
+  object-fit: cover;
+  max-width: none;
+  width: 64px;
+  height: 64px;
+}
+
+.title {
+  text-wrap: nowrap;
+}

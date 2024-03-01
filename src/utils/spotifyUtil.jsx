@@ -301,6 +301,11 @@ async function refreshTokenClick() {
   window.location.reload();
 }
 
+async function refreshSession() {
+  const token = await refreshToken();
+  currentToken.save(token);
+}
+
 function loggedIn() {
   return localStorage.getItem("logged_in");
 }
@@ -333,4 +338,5 @@ export {
   profileInit,
   getPlaylistsIn,
   getTrack,
+  refreshSession,
 };

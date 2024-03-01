@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
-import React from "react";
 import {
   fetchTracks,
   getPlaylist,
   getDuplicatesFromId,
-  tokenExpired,
-  refreshTokenClick,
+  refreshSession,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import { useEffect, useState } from "react";
@@ -37,7 +35,13 @@ const Tracklist = () => {
       const dupesData = getDuplicatesFromId(playlistId);
       const trackData = await fetchTracks(playlistId);
 
-      if (trackData) {
+      // Handle expired sessions
+      if (trackData.error) {
+        if (trackData.error.status === 401) {
+          await refreshSession();
+        }
+      } else if (trackData) {
+        // Load track data
         setTracks(trackData);
         setTracksLoaded(true);
         console.log("tracks", trackData);
@@ -74,11 +78,11 @@ const Tracklist = () => {
               <h2 className="subtitle">{playlist.description}</h2>
             </div>
             <h2 className="column title has-text-right">
-              Here are some dupe listens we found..
+              Duplicate listens...
             </h2>
           </div>
-          <div className="columns is-8">
-            <div className="column">
+          <div className="columns">
+            <div className="column is-half">
               <div className="">
                 {tracksLoaded ? (
                   tracks.items.map((track) => (
@@ -93,7 +97,7 @@ const Tracklist = () => {
                 )}
               </div>
             </div>
-            <div className="column">
+            <div className="column is-half">
               <div className="">
                 {dupesLoaded ? (
                   dupes.map((track) => (

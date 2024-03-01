@@ -25,11 +25,13 @@ function Dashboard() {
     <>
       <section className="hero is-fullheight">
         <NavBar></NavBar>
-        <div className="container">
+        <div className="container is-flex is-flex-direction-column is-justify-content-center">
           <div className="section"></div>
-          <h2 className="m-3 title">Playlists - {profileData.display_name}</h2>
           <div className="is-flex-direction-column is-justify-content-center">
-            <div className="is-align-content-flex-start is-flex is-flex-wrap-wrap">
+            <h2 className="is-flex display-name m-3 title">
+              Playlists - {profileData.display_name}
+            </h2>
+            <div className="my-div is-justify-content-center is-flex is-flex-wrap-wrap">
               {playlistTiles}
             </div>
           </div>

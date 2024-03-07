@@ -4,6 +4,7 @@ import {
   getPlaylist,
   getDuplicatesFromId,
   refreshSession,
+  refreshTokenClick,
 } from "../utils/spotifyUtil";
 import NavBar from "../components/navbar";
 import { useEffect, useState } from "react";
@@ -11,9 +12,12 @@ import TrackTile from "../components/track-tile";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import "../css/tracklist.css";
+import LoadingTile from "../components/loading-tile";
 
 const Tracklist = () => {
   const navigate = useNavigate();
+
+  const loadingArr = Array(10).fill();
 
   const playlistId = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
@@ -35,10 +39,19 @@ const Tracklist = () => {
       const dupesData = getDuplicatesFromId(playlistId);
       const trackData = await fetchTracks(playlistId);
 
+      // Load Dupes
+      if (dupesData) {
+        setDupes(dupesData);
+        setDupesLoaded(true);
+        console.log("dupes", dupesData);
+      }
+
       // Handle expired sessions
       if (trackData.error) {
         if (trackData.error.status === 401) {
+          console.log("session expired");
           await refreshSession();
+          window.location.reload();
         }
       } else if (trackData) {
         // Load track data
@@ -46,12 +59,6 @@ const Tracklist = () => {
         setTracksLoaded(true);
         console.log("tracks", trackData);
         //TODO save data so it doesnt refresh every time
-      }
-
-      if (dupesData) {
-        setDupes(dupesData);
-        setDupesLoaded(true);
-        console.log("dupes", dupesData);
       }
     })();
   }, [playlistId]);
@@ -70,7 +77,6 @@ const Tracklist = () => {
             <button className="button is-text mb-5" onClick={goBack}>
               <IoArrowBackOutline className="arrow" />
             </button>
-            {!dupesLoaded ? <div className="subtitle">Loading...</div> : <></>}
           </div>
           <div className="columns mb-5">
             <div className="column">
@@ -84,33 +90,37 @@ const Tracklist = () => {
           <div className="columns">
             <div className="column is-half">
               <div className="">
-                {tracksLoaded ? (
-                  tracks.items.map((track) => (
-                    <TrackTile
-                      className="m-2"
-                      key={track.track.id}
-                      track={track.track}
-                    ></TrackTile>
-                  ))
-                ) : (
-                  <></>
-                )}
+                {tracksLoaded
+                  ? tracks.items.map((track) => (
+                      <TrackTile
+                        className="m-2"
+                        key={track.track.id}
+                        track={track.track}
+                      ></TrackTile>
+                    ))
+                  : loadingArr.map((i) => (
+                      <LoadingTile key={i} className="m-2"></LoadingTile>
+                    ))}
               </div>
             </div>
             <div className="column is-half">
               <div className="">
-                {dupesLoaded ? (
-                  dupes.map((track) => (
-                    <TrackTile
-                      className="m-2"
-                      key={track.id}
-                      track={track.track}
-                      reversed={true}
-                    ></TrackTile>
-                  ))
-                ) : (
-                  <></>
-                )}
+                {dupesLoaded
+                  ? dupes.map((track) => (
+                      <TrackTile
+                        className="m-2"
+                        key={track.id}
+                        track={track.track}
+                        reversed={true}
+                      ></TrackTile>
+                    ))
+                  : loadingArr.map((i) => (
+                      <LoadingTile
+                        reversed={true}
+                        key={i}
+                        className="m-2"
+                      ></LoadingTile>
+                    ))}
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import ProfileInit from "./routes/profile-init";
 import FoundIn from "./routes/found-in";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RefreshToken from "./routes/refreshToken";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
   {
     path: "/track-view/:id",
     element: <FoundIn />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/session-expired",
+    element: <RefreshToken />,
     errorElement: <ErrorPage />,
   },
 ]);

@@ -1,9 +1,24 @@
 import "../css/dashboard.css";
 import NavBar from "../components/navbar";
-import { getPlaylists, getProfile } from "../utils/spotifyUtil";
+import { getPlaylists, getProfile, loggedIn } from "../utils/spotifyUtil";
 import PlaylistTile from "../components/playlist-tile";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+/*   useEffect(() => {
+    // Check if the user is logged in
+    const isLoggedIn = loggedIn();
+
+    // If the user is not logged in, redirect to the home screen
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [navigate]);
+ */
+
   const playlistData = getPlaylists();
   const profileData = getProfile();
 

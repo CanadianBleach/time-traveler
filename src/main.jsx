@@ -2,6 +2,7 @@ import "bulma/css/bulma.min.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Root from "./routes/root";
+
 import ErrorPage from "./error-page";
 
 // Page imports
@@ -16,7 +17,7 @@ import RefreshToken from "./routes/refreshToken";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <App />,
     errorElement: <ErrorPage />,
   },
   {

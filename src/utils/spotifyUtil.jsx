@@ -1,7 +1,5 @@
-import dayjs from "dayjs";
-import { func } from "prop-types";
-import { json } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import LZString from 'lz-string';
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
@@ -47,7 +45,18 @@ async function fetchProfile() {
 }
 
 function getProfile() {
-  return JSON.parse(localStorage.getItem("user_profile"));
+  const compressed = localStorage.getItem("user_profile");
+  if (!compressed) return null;
+
+  const decompressed = LZString.decompress(compressed);
+  if (!decompressed) return null;
+
+  try {
+    return JSON.parse(decompressed);
+  } catch (e) {
+    console.error("Error parsing decompressed user_profile:", e);
+    return null;
+  }
 }
 
 async function fetchPlaylists() {
@@ -64,7 +73,7 @@ async function fetchPlaylists() {
 
 // Returns playlists from localstorage
 function getPlaylists() {
-  return JSON.parse(localStorage.getItem("user_playlists"));
+  return JSON.parse(LZString.decompress(localStorage.getItem("user_playlists")));
 }
 
 const getPlaylistsIn = (songId) => {
@@ -149,10 +158,10 @@ async function profileInit() {
   const playlistData = await fetchPlaylists();
   const songs = await createSongStruct(playlistData.items);
 
-  // TODO: Add to mongo
-  localStorage.setItem("user_profile", JSON.stringify(userData));
-  localStorage.setItem("user_playlists", JSON.stringify(playlistData));
-  localStorage.setItem("user_tracks", JSON.stringify(songs));
+  // Compress data before storing
+  localStorage.setItem("user_profile", LZString.compress(JSON.stringify(userData)));
+  localStorage.setItem("user_playlists", LZString.compress(JSON.stringify(playlistData)));
+  localStorage.setItem("user_tracks", LZString.compress(JSON.stringify(songs)));
 
   return true;
 }
@@ -208,7 +217,7 @@ async function createSongStruct(playlists) {
 }
 
 function getTracks() {
-  return JSON.parse(localStorage.getItem("user_tracks"));
+  return JSON.parse(LZString.decompress(localStorage.getItem("user_tracks")));
 }
 
 async function redirectToSpotifyAuthorize() {

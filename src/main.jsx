@@ -17,7 +17,7 @@ import RefreshToken from "./routes/refreshToken";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Root />,
     errorElement: <ErrorPage />,
   },
   {

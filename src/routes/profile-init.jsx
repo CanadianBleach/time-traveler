@@ -20,7 +20,7 @@ function ProfileInit() {
         setProfileLoaded(true);
         console.log("profile-created");
         localStorage.setItem("logged_in", true);
-        navigate("../dashboard");
+        window.location.href = "../dashboard";
       }
     })();
   }, [navigate]);
